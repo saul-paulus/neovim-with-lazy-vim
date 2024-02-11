@@ -16,7 +16,13 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local plugins = {}
+local plugins = {
+  {
+    "olimorris/onedarkpro.nvim", priority = 1000,
+  }
+}
 local opts = {}
 
 require("lazy").setup(plugins, opts)
+
+vim.cmd("colorscheme onedark")
