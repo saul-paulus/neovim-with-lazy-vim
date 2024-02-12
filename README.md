@@ -7,6 +7,7 @@
 ## How To Use
 
 ### Clone this repository (In Linux: ~/.config)
+`
 ```bash
 $ git clone https://github.com/saul-paulus/neovim-with-lazy-vim.git
 ```
@@ -18,5 +19,6 @@ $ cd neovim-with-lazy-vim
 ```bash
 :Lazy
 ```
+`
 ## License
 MIT
