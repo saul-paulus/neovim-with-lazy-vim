@@ -6,15 +6,15 @@
 
 ## How To Use
 
-#### Clone this repository (In Linux: ~/.config)
+###### Clone this repository (In Linux: ~/.config)
 ```bash
 $ git clone https://github.com/saul-paulus/neovim-with-lazy-vim.git
 ```
-#### Go into the repository (And rename folder to nvim)
+##### Go into the repository (And rename folder to nvim)
 ```bash
 $ cd neovim-with-lazy-vim
 ```
-#### Install dependencies
+##### Install dependencies
 ```bash
 :Lazy
 ```
