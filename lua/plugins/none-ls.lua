@@ -1,6 +1,6 @@
 return {
-    {
-        "nvimtools/none-ls.nvim",
-        dependencies = { "mason.nvim" }
-    }
+	{
+		"nvimtools/none-ls.nvim",
+		dependencies = { "mason.nvim" },
+	},
 }
