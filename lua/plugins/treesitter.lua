@@ -2,11 +2,11 @@
 
 return {
   {
-    'nvim-treesitter/nvim-treesitter', 
+    'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     event = {"BufRead","BufReadPost", "BufNewFile" },
     dependencies = {
-      -- "JoosepAlviste/nvim-ts-context-commentstring",
+     -- "JoosepAlviste/nvim-ts-context-commentstring",
       "p00f/nvim-ts-rainbow",
       "windwp/nvim-ts-autotag",
       "yioneko/nvim-yati",
@@ -15,8 +15,7 @@ return {
       "Badhi/nvim-treesitter-cpp-tools",
     },
     config = function()
-      local config =  require("nvim-treesitter.configs")
-      config.setup({
+      require("nvim-treesitter").setup({
         ensure_installed =  { "c", "lua", "vim", "vimdoc", "query","bash","python","php","tsx","toml","typescript","markdown", "markdown_inline","html","javascript","json" },
         highlight = {enable = true},
         indent = {enable = true},
