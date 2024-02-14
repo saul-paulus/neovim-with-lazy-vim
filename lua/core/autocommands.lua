@@ -61,6 +61,15 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   end,
 })
 
+vim.api.nvim_create_autocmd("TermClose", {
+  pattern = "*lazygit",
+  callback = function()
+    if package.loaded["neo-tree.sources.git_status"] then
+      require("neo-tree.sources.git_status").refresh()
+    end
+  end,
+})
+
 
 vim.api.nvim_create_autocmd({ "CursorHold" }, {
   callback = function()
