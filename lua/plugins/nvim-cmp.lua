@@ -16,17 +16,12 @@ local M = {
       },
     },
     "hrsh7th/cmp-nvim-lua",
-    "roobert/tailwindcss-colorizer-cmp.nvim",
   }
 }
 
 
 
 function M.config()
-  require("tailwindcss-colorizer-cmp").setup {
-    color_square_width = 2,
-  }
-
   vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
   vim.api.nvim_set_hl(0, "CmpItemKindTabnine", { fg = "#CA42F0" })
   vim.api.nvim_set_hl(0, "CmpItemKindCrate", { fg = "#F64D00" })
