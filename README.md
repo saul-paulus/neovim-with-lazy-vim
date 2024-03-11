@@ -8,7 +8,7 @@
 
 - Clone this repository (In Linux: ~/.config)
 ```bash
-$ git clone https://github.com/saul-paulus/neovim-with-lazy-vim.git
+git clone https://github.com/saul-paulus/neovim-with-lazy-vim.git ~/.config/nvim
 ```
 - Go into the repository (And rename folder to nvim)
 ```bash
