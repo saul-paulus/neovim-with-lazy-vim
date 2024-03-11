@@ -11,7 +11,6 @@ local servers = {
   "emmet_ls",
   "intelephense",
   "marksman",
-  "tailwindcss",
   "eslint",
 }
 
