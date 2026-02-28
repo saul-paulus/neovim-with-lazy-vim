@@ -5,33 +5,22 @@ if not status_cmp_ok then
   return
 end
 
-local icons = require("core.icons")
-
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true
 M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
 
 M.setup = function()
-  local signs = {
-
-  { name = "DiagnosticSignError", text = "" },
-  { name = "DiagnosticSignWarn", text = "" },
-  { name = "DiagnosticSignHint", text = "" },
-  { name = "DiagnosticSignInfo", text = "" },
-  --  { name = "DiagnosticSignError", text = icons.diagnostics.Error },
-  --  { name = "DiagnosticSignWarn", text = icons.diagnostics.Warning },
-  --  { name = "DiagnosticSignHint", text = icons.diagnostics.Hint },
-  --  { name = "DiagnosticSignInfo", text = icons.diagnostics.Info },
-  }
-
-  for _, sign in ipairs(signs) do
-    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
-  end
-
   local config = {
-    virtual_text = false, -- disable virtual text
+    virtual_text = false,
     signs = {
-      active = signs, -- show signs
+      text = {
+        [vim.diagnostic.severity.ERROR] = "",
+        [vim.diagnostic.severity.WARN] = "",
+        [vim.diagnostic.severity.HINT] = "",
+        [vim.diagnostic.severity.INFO] = "",
+      },
+      linehl = {},
+      numhl = {},
     },
     update_in_insert = true,
     underline = true,
@@ -48,21 +37,14 @@ M.setup = function()
 
   vim.diagnostic.config(config)
 
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = "rounded",
-  })
-
-  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = "rounded",
-  })
+  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 end
 
 local function attach_navic(client, bufnr)
   vim.g.navic_silence = true
   local status_ok, navic = pcall(require, "nvim-navic")
-  if not status_ok then
-    return
-  end
+  if not status_ok then return end
   navic.attach(client, bufnr)
 end
 
@@ -85,22 +67,17 @@ local function lsp_keymaps(bufnr)
   keymap(bufnr, "n", "<leader>ls", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
   keymap(bufnr, "n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
 end
+
 M.on_attach = function(client, bufnr)
   attach_navic(client, bufnr)
-  if client.name == "tsserver" then
+  if client.name == "ts_ls" then
     client.server_capabilities.documentFormattingProvider = false
   end
-
-  if client.name == "sumneko_lua" then
-    client.server_capabilities.documentFormattingProvider = false
-  end
-
   lsp_keymaps(bufnr)
   local status_ok, illuminate = pcall(require, "illuminate")
-  if not status_ok then
-    return
+  if status_ok then
+    illuminate.on_attach(client)
   end
-  illuminate.on_attach(client)
 end
 
 return M

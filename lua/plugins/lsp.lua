@@ -2,7 +2,7 @@ return {
 -- lsp
   {
     "neovim/nvim-lspconfig",
-    event = "BufWinEnter",
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
       require("core.lsp")
     end,
@@ -22,10 +22,5 @@ return {
       "MasonLog",
     },
     dependencies = { "williamboman/mason-lspconfig.nvim" },
-    init = function()
-      vim.tbl_map(function(plugin)
-        pcall(require, plugin)
-      end, { "lspconfig", "null-ls" })
-    end,
   }
 }

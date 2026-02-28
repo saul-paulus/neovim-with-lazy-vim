@@ -2,7 +2,7 @@ local servers = {
   "lua_ls",
   "cssls",
   "html",
-  "tsserver",
+  "ts_ls",
   "pyright",
   -- "bashls",
   "jsonls",
@@ -35,7 +35,7 @@ require("mason").setup(settings)
 -- })
 --
 -- * buka remark ini jika ingin menjalankan dengan cara install dan remark config diatas (pilih satu)
-require("mason-lspconfig").setup()
+require("mason-lspconfig").setup({ ensure_installed = servers, automatic_installation = true })
 
 local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
 if not lspconfig_status_ok then

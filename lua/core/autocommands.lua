@@ -1,3 +1,28 @@
+
+-- Auto change directory to project root
+local root_names = { ".git", "Makefile", "package.json", "package-lock.json", "composer.json" }
+local function get_root()
+  local path = vim.api.nvim_buf_get_name(0)
+  if path == "" then return nil end
+  path = vim.fs.dirname(path)
+
+  local root_file = vim.fs.find(root_names, { path = path, upward = true })[1]
+  if root_file then
+    return vim.fs.dirname(root_file)
+  end
+  return nil
+end
+
+vim.api.nvim_create_autocmd("BufEnter", {
+  callback = function()
+    local root = get_root()
+    if root then
+      vim.api.nvim_set_current_dir(root)
+    end
+  end
+})
+
+
 vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
   callback = function()
     vim.cmd "set formatoptions-=cro"
