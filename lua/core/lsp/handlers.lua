@@ -70,9 +70,15 @@ end
 
 M.on_attach = function(client, bufnr)
   attach_navic(client, bufnr)
-  if client.name == "ts_ls" then
-    client.server_capabilities.documentFormattingProvider = false
+  
+  -- Disable formatting for some servers to let null-ls handle it
+  local disable_formatting = { "ts_ls", "volar", "intelephense", "phpactor", "tailwindcss" }
+  for _, name in pairs(disable_formatting) do
+    if client.name == name then
+      client.server_capabilities.documentFormattingProvider = false
+    end
   end
+
   lsp_keymaps(bufnr)
   local status_ok, illuminate = pcall(require, "illuminate")
   if status_ok then

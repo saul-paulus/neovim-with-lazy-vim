@@ -76,3 +76,5 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.lspconfig_warn_on_framework_usage = false
 vim.g.lspconfig_suppress_011_warning = true
+vim.opt.breakindent = true
+vim.opt.showbreak = "↳ "

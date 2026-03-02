@@ -10,18 +10,42 @@ return {
       },
     },
     routes = {
+      -- Hide 0.11 warnings (deprecated/framework)
       {
         filter = {
-          event = "msg_show",
           any = {
-            { find = "deprecated" },
-            { find = "framework" },
-            { find = "sign_define" },
-            { find = "ts_ls" },
+            { event = "msg_show", find = "deprecated" },
+            { event = "msg_show", find = "framework" },
+            { event = "msg_show", find = "sign_define" },
+            { event = "notify", find = "deprecated" },
+            { event = "notify", find = "framework" },
           },
         },
         skip = true,
       },
+      -- Hide mason-lspconfig errors about volar naming or other servers
+      {
+        filter = {
+          event = "notify",
+          any = {
+            { find = "volar" },
+            { find = "tailwindcss" },
+            { find = "mason-lspconfig" },
+          }
+        },
+        skip = true,
+      },
+      -- Silencing spawning errors for now if they are transient or noisy
+      {
+        filter = {
+          event = "msg_show",
+          any = {
+            { find = "Spawning language server" },
+          }
+        },
+        skip = true,
+      },
+      -- Cleanup small messages
       {
         filter = {
           event = "msg_show",
