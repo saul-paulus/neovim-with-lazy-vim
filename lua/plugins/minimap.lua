@@ -13,34 +13,30 @@ return {
     })
     codewindow.apply_default_keybinds()
     
-    -- Add global mouse scroll support for the minimap window
-    vim.keymap.set({'n', 'v', 'i'}, '<ScrollWheelUp>', function()
-      local win = vim.api.nvim_get_current_win()
-      local cw_win = require('codewindow.window').get_minimap_window()
-      
-      -- Check if we are hovering over the codewindow floating window
+    -- Improved global mouse scroll support for the minimap window
+    local function scroll_minimap_if_hovered(amount)
       local mouse = vim.fn.getmousepos()
-      if cw_win and mouse.winid == cw_win.window then
-        require('codewindow.window').scroll_minimap(-1)
+      local window_lib = require('codewindow.window')
+      local cw_win = window_lib.get_minimap_window()
+      
+      if cw_win and cw_win.window and mouse.winid == cw_win.window then
+        window_lib.scroll_minimap(amount)
+        return true
+      end
+      return false
+    end
+
+    vim.keymap.set({'n', 'v', 'i'}, '<ScrollWheelUp>', function()
+      if scroll_minimap_if_hovered(-1) then
         return ''
       end
-      
-      -- Default behavior for normal windows
       return '<ScrollWheelUp>'
     end, { expr = true, replace_keycodes = true })
     
     vim.keymap.set({'n', 'v', 'i'}, '<ScrollWheelDown>', function()
-      local win = vim.api.nvim_get_current_win()
-      local cw_win = require('codewindow.window').get_minimap_window()
-      
-      -- Check if we are hovering over the codewindow floating window
-      local mouse = vim.fn.getmousepos()
-      if cw_win and mouse.winid == cw_win.window then
-        require('codewindow.window').scroll_minimap(1)
+      if scroll_minimap_if_hovered(1) then
         return ''
       end
-      
-      -- Default behavior for normal windows
       return '<ScrollWheelDown>'
     end, { expr = true, replace_keycodes = true })
   end,
