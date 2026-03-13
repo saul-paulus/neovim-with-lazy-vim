@@ -1,81 +1,81 @@
 ## Neovim Professional Setup
 
-Konfigurasi ini menjadikan Neovim sebagai editor profesional untuk software engineer **polyglot**: LSP lengkap, auto-format, testing terintegrasi, dan workflow harian yang konsisten.
+This configuration turns Neovim into a **professional polyglot editor** for software engineers: full LSP support, automatic formatting, integrated testing, and a consistent daily workflow.
 
-### Fitur utama
+### Key features
 
-- **Manajemen plugin modern**: `lazy.nvim` sebagai plugin manager.
-- **Bahasa & LSP**:
+- **Modern plugin management**: `lazy.nvim` as the plugin manager.
+- **Languages & LSPs**:
   - JavaScript/TypeScript (frontend & backend)
   - PHP (`intelephense`)
-  - Python, Go, Rust, Lua, HTML/CSS, JSON/YAML, Markdown, dan lainnya
+  - Python, Go, Rust, Lua, HTML/CSS, JSON/YAML, Markdown, and more
 - **Auto-completion & snippets**:
   - `nvim-cmp` + `LuaSnip` + `friendly-snippets`
-- **Formatting otomatis**:
-  - `conform.nvim` (prettier/prettierd, black, isort, stylua, rustfmt, shfmt, pint, php-cs-fixer, dll.)
-  - Format on save dengan fallback ke LSP bila perlu
-- **Navigasi & struktur kode**:
+- **Automatic formatting**:
+  - `conform.nvim` (prettier/prettierd, black, isort, stylua, rustfmt, shfmt, pint, php-cs-fixer, etc.)
+  - Format on save with LSP as a fallback when needed
+- **Code navigation & structure**:
   - `nvim-treesitter` + textobjects
-  - `telescope.nvim` untuk fuzzy find
-  - `neo-tree` sebagai file explorer, git status, dan diagnostics view
-- **Testing terintegrasi**:
-  - `neotest` + adapter (Jest, Python, Go, Rust)
-  - Keymap standar untuk menjalankan test dari dalam Neovim
-- **UX tambahan**:
-  - `lualine`, `which-key`, `bufferline`, dll.
+  - `telescope.nvim` for fuzzy finding
+  - `neo-tree` as file explorer, git status, and diagnostics view
+- **Integrated testing**:
+  - `neotest` + adapters (Jest, Python, Go, Rust)
+  - Standard keymaps to run tests directly from Neovim
+- **UX enhancements**:
+  - `lualine`, `which-key`, `bufferline`, and more
 
 ---
 
-## Instalasi
+## Installation
 
-### 1. Clone konfigurasi
+### 1. Clone the configuration
 
-Di Linux/macOS (direktori Neovim standar `~/.config/nvim`):
+On Linux/macOS (default Neovim config directory `~/.config/nvim`):
 
 ```bash
 git clone https://github.com/saul-paulus/neovim-with-lazy-vim.git ~/.config/nvim
 ```
 
-> Jika Anda clone ke folder lain, pastikan nama folder akhirnya adalah `nvim`.
+> If you clone into a different directory, make sure the final folder name is `nvim`.
 
-### 2. Jalankan Neovim dan install plugin
+### 2. Start Neovim and install plugins
 
-1. Buka Neovim:
+1. Open Neovim:
 
    ```bash
    nvim
    ```
 
-2. Lazy akan otomatis meng-install plugin saat pertama kali dibuka.  
-   Anda bisa membuka dashboard Lazy secara manual:
+2. Lazy will automatically install all plugins on the first start.  
+   You can open the Lazy dashboard manually with:
 
    ```vim
    :Lazy
    ```
 
-Tunggu hingga semua plugin selesai ter-install, lalu restart Neovim.
+Wait until all plugins are installed, then restart Neovim.
 
 ---
 
-## Workflow harian (ringkas)
+## Daily workflow (overview)
 
-### LSP & navigasi kode
+### LSP & code navigation
 
 - **Go to definition**: `gd`
 - **Go to declaration**: `gD`
-- **Implementation**: `gI`
-- **References**: `gr`
-- **Hover docs**: `K`
+- **Go to implementation**: `gI`
+- **Find references**: `gr`
+- **Hover documentation**: `K`
 - **Rename symbol**: `<leader>lr`
 - **Code action**: `<leader>la`
 - **Diagnostics**:
-  - Buka float di posisi cursor: `gl`
-  - Next/prev diagnostic buffer: `<leader>lj` / `<leader>lk`
+  - Open diagnostic float at cursor: `gl`
+  - Next/previous diagnostic in buffer: `<leader>lj` / `<leader>lk`
 
 ### Formatting
 
-- **Format on save**: aktif secara default untuk banyak filetype.
-- **Format manual**:
+- **Format on save**: enabled by default for many filetypes.
+- **Manual format**:
 
   ```vim
   :Format
@@ -85,30 +85,30 @@ Tunggu hingga semua plugin selesai ter-install, lalu restart Neovim.
 
 Normal mode:
 
-- Jalankan test terdekat (nearest): **`<leader>tn`**
-- Jalankan test untuk file saat ini: **`<leader>tf`**
-- Jalankan seluruh suite/project: **`<leader>ts`**
-- Jalankan ulang test terakhir: **`<leader>tl`**
-- Toggle panel summary test: **`<leader>to`**
+- Run nearest test: **`<leader>tn`**
+- Run all tests in current file: **`<leader>tf`**
+- Run the whole test suite/project: **`<leader>ts`**
+- Re-run last test: **`<leader>tl`**
+- Toggle test summary panel: **`<leader>to`**
 
 ---
 
-## Catatan untuk PHP (Intelephense)
+## PHP (Intelephense) notes
 
-Konfigurasi sudah menyiapkan LSP `intelephense` melalui `mason-lspconfig`.  
-Untuk mengaktifkannya:
+The configuration is prepared to use the `intelephense` LSP via `mason-lspconfig`.  
+To enable it:
 
-1. Buka Neovim dan jalankan:
+1. Open Neovim and run:
 
    ```vim
    :Mason
    ```
 
-2. Install package **`intelephense`** dari UI Mason.
-3. Restart Neovim dan buka file `.php`.
+2. Install the **`intelephense`** package from the Mason UI.
+3. Restart Neovim and open a `.php` file.
 
 ---
 
-## Lisensi
+## License
 
 MIT
