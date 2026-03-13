@@ -28,10 +28,13 @@ local M = {
 function M.config()
   require('lualine').setup({
     options = {
-      theme = 'vscode',
+      theme = 'auto',
       component_separators = { left = '', right = '' },
       section_separators = { left = '', right = '' },
-      disabled_filetypes = { 'alpha', 'dashboard' },
+      disabled_filetypes = {
+        statusline = { 'dashboard', 'lazy' },
+        winbar = {},
+      },
     },
     sections = {
       lualine_a = { 'mode' },

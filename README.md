@@ -1,4 +1,6 @@
-## Neovim Professional Setup
+![alt text](image.png)
+
+# Neovim Professional Setup
 
 This configuration turns Neovim into a **professional polyglot editor** for software engineers: full LSP support, automatic formatting, integrated testing, and a consistent daily workflow.
 
