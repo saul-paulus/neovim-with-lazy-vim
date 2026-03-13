@@ -109,6 +109,7 @@ To enable it:
 
 ---
 
-## License
+## 📄 License
 
-MIT
+This project is open-source software licensed under the MIT License.
+See the see [LICENSE](LICENSE)
