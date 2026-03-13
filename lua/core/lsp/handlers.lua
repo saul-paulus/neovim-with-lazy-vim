@@ -10,18 +10,15 @@ M.capabilities.textDocument.completion.completionItem.snippetSupport = true
 M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
 
 M.setup = function()
+  local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+  for type, icon in pairs(signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+  end
+
   local config = {
     virtual_text = false,
-    signs = {
-      text = {
-        [vim.diagnostic.severity.ERROR] = "",
-        [vim.diagnostic.severity.WARN] = "",
-        [vim.diagnostic.severity.HINT] = "",
-        [vim.diagnostic.severity.INFO] = "",
-      },
-      linehl = {},
-      numhl = {},
-    },
+    signs = true,
     update_in_insert = true,
     underline = true,
     severity_sort = true,
@@ -70,8 +67,8 @@ end
 
 M.on_attach = function(client, bufnr)
   attach_navic(client, bufnr)
-  
-  -- Disable formatting for some servers to let null-ls handle it
+
+  -- Disable LSP formatting for servers handled by external formatters (e.g. conform.nvim)
   local disable_formatting = { "ts_ls", "volar", "intelephense", "phpactor", "tailwindcss" }
   for _, name in pairs(disable_formatting) do
     if client.name == name then

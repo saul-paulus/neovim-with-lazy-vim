@@ -192,7 +192,7 @@ function M.config()
                                 -- "open_current",  -- netrw disabled, opening a directory opens within the
                                                   -- window like netrw would, regardless of window.position
                                 -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
-          use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
+          use_libuv_file_watcher = true, -- This will use the OS level file watchers to detect changes
                                           -- instead of relying on nvim autocmd events.
           window = {
             mappings = {
@@ -249,6 +249,19 @@ function M.config()
             }
           },
         },
+    source_selector = {
+      winbar = true,
+      statusline = false,
+      content_layout = "start",
+      tabs_layout = "equal",
+      show_separator_on_left = true,
+      sources = {
+        { source = "filesystem", display_name = " 󰉓   Files " },
+        { source = "buffers", display_name = " 󰄱   Buffers " },
+        { source = "git_status", display_name = " 󰊢   Git " },
+        { source = "diagnostics", display_name = " 󰒡   Diagnostics " },
+      },
+    },
     git_status = {
       window = {
         position = "float",

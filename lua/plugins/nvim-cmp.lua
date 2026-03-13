@@ -15,6 +15,7 @@ local M = {
         "rafamadriz/friendly-snippets",
       },
     },
+    { "roobert/tailwindcss-colorizer-cmp.nvim", config = true },
     "hrsh7th/cmp-nvim-lua",
   }
 }
@@ -258,14 +259,15 @@ function M.config()
         end,
       },
       { name = "luasnip" },
-      { name = "cmp_tabnine" },
       { name = "nvim_lua" },
       { name = "buffer" },
       { name = "path" },
       { name = "calc" },
       { name = "emoji" },
       { name = "treesitter" },
-      { name = "crates" },
+      -- { name = "copilot" },
+      -- { name = "cmp_tabnine" },
+      -- { name = "crates" },
     },
     confirm_opts = {
       behavior = cmp.ConfirmBehavior.Replace,
@@ -298,9 +300,12 @@ function M.config()
   }
 
   pcall(function()
-    -- local function on_confirm_done(...)
-    --   require("nvim-autopairs.completion.cmp").on_confirm_done()(...)
-    -- end
+    local function on_confirm_done(...)
+      local ok, autopairs = pcall(require, "nvim-autopairs.completion.cmp")
+      if ok then
+        autopairs.on_confirm_done()(...)
+      end
+    end
    require("cmp").event:off("confirm_done", on_confirm_done)
    require("cmp").event:on("confirm_done", on_confirm_done)
   end)
