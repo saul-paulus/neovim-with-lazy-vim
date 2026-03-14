@@ -21,7 +21,7 @@ function M.config()
     { "<leader>aN", "<cmd>tabnew %<cr>", desc = "New Tab" },
     { "<leader>ao", "<cmd>tabonly<cr>", desc = "Only" },
     { "<leader>b", group = "Buffers" },
-    { "<leader>c", "<cmd>bd<cr>", desc = "Close Buffer" },
+    { "<leader>c", "<cmd>Bdelete<cr>", desc = "Close Buffer" },
     { "<leader>d", group = "Debug" },
     { "<leader>f", group = "Find" },
     { "<leader>fn", "<cmd>enew<cr>", desc = "New File" },

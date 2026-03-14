@@ -8,6 +8,8 @@ return {
     return {
       options = {
         mode = 'buffers',
+        close_command = "Bdelete %d",
+        right_mouse_command = "Bdelete %d",
         style_preset = {
           bufferline.style_preset.no_italic,
           bufferline.style_preset.no_bold,
