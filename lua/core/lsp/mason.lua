@@ -2,7 +2,6 @@ local servers = {
   'lua_ls',
   'cssls',
   'html',
-  'ts_ls',
   'pyright',
   'jsonls',
   'yamlls',

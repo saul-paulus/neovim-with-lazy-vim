@@ -30,6 +30,7 @@ function M.config()
     { "<leader>l", group = "LSP" },
     { "<leader>p", group = "Plugins" },
     { "<leader>q", "<cmd>confirm q<CR>", desc = "Quit App" },
+    { "<leader>r", group = "Rest" },
     { "<leader>t", group = "Test" },
     { "<leader>T", group = "Treesitter" },
     { "<leader>v", "<cmd>vsplit<CR>", desc = "Split" },
