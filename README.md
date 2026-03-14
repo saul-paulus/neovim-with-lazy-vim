@@ -29,81 +29,81 @@ Open Neovim and wait for `lazy.nvim` to install all plugins. Restart after compl
 
 ## ⌨️ Keymaps Documentation
 
-Berikut adalah rangkuman perintah keyboard untuk workflow harian Anda.
+Here is a summary of the keyboard commands for your daily workflow.
 
 ### 🛠️ General & Editor
-| Tombol | Perintah Vim | Deskripsi |
+| Key | Vim Command | Description |
 | :--- | :--- | :--- |
-| **`<leader>`** | `<Space>` | **Leader Key Utaman** |
-| `Ctrl + s` | `:w` | Simpan file |
-| `Ctrl + z` | `u` | Undo (Batal) |
-| `Ctrl + y` | `Ctrl + r` | Redo (Kembali) |
-| `Ctrl + a` | `ggVG` | Pilih Semua Teks |
-| `Ctrl + f` | `/` | Cari Teks (Search) |
-| `Ctrl + /` | `gcc` | Toggle Komentar (Line) |
-| `Alt + j` | - | Geser baris ke Bawah |
-| `Alt + k` | - | Geser baris ke Atas |
-| `<leader>h` | `:nohlsearch` | Hilangkan highlight pencarian |
-| `<leader>q` | `:confirm q` | Keluar dari Neovim |
+| **`<leader>`** | `<Space>` | **Main Leader Key** |
+| `Ctrl + s` | `:w` | Save file |
+| `Ctrl + z` | `u` | Undo |
+| `Ctrl + y` | `Ctrl + r` | Redo |
+| `Ctrl + a` | `ggVG` | Select All Text |
+| `Ctrl + f` | `/` | Search Text |
+| `Ctrl + /` | `gcc` | Toggle Comment (Line) |
+| `Alt + j` | - | Move line Down |
+| `Alt + k` | - | Move line Up |
+| `<leader>h` | `:nohlsearch` | Clear search highlights |
+| `<leader>q` | `:confirm q` | Quit Neovim |
 
 ### 🪟 Windows & Buffers
-| Tombol | Perintah | Deskripsi |
+| Key | Command | Description |
 | :--- | :--- | :--- |
-| `<leader>v` | `:vsplit` | Split jendela secara Vertikal |
-| `Ctrl + h` | - | Pindah ke jendela Kiri |
-| `Ctrl + j` | - | Pindah ke jendela Bawah |
-| `Ctrl + k` | - | Pindah ke jendela Atas |
-| `Ctrl + l` | - | Pindah ke jendela Kanan |
-| `<Tab>` | `:bnext` | Pindah ke Buffer Berikutnya |
-| `Shift + <Tab>` | `:bprevious` | Pindah ke Buffer Sebelumnya |
-| `<leader>c` | `:bd` | Menutup Buffer/Tab saat ini |
+| `<leader>v` | `:vsplit` | Split window Vertically |
+| `Ctrl + h` | - | Focus Left window |
+| `Ctrl + j` | - | Focus Bottom window |
+| `Ctrl + k` | - | Focus Top window |
+| `Ctrl + l` | - | Focus Right window |
+| `<Tab>` | `:bnext` | Go to Next Buffer |
+| `Shift + <Tab>` | `:bprevious` | Go to Previous Buffer |
+| `<leader>c` | `:bd` | Close current Buffer/Tab |
 
 ### 🧠 LSP & Code Intelligence
-| Tombol | Aksi | Deskripsi |
+| Key | Action | Description |
 | :--- | :--- | :--- |
-| `gd` | Definition | Ke definisi fungsi/variabel |
-| `gD` | Declaration | Ke deklarasi fungsi/variabel |
-| `gI` | Implementation | Ke implementasi class/interface |
-| `gr` | References | Cari semua referensi kode |
-| `K` | Hover | Tampilkan dokumentasi fungsi |
-| `gl` | Diagnostic | Lihat error di baris saat ini |
-| `<leader>lr` | Rename | Ubah nama variabel secara global |
-| `<leader>la` | Code Action | Saran perbaikan kode (Quick fix) |
-| `<leader>lf` | Format | Merapikan kode (Manual) |
-| `<leader>lj` | Next Diagnostic | Lompat ke error berikutnya |
-| `<leader>lk` | Prev Diagnostic | Lompat ke error sebelumnya |
+| `gd` | Definition | Jump to function/variable definition |
+| `gD` | Declaration | Jump to function/variable declaration |
+| `gI` | Implementation | Jump to class/interface implementation |
+| `gr` | References | Search for all code references |
+| `K` | Hover | Show function documentation |
+| `gl` | Diagnostic | View error at current line |
+| `<leader>lr` | Rename | Rename variable globally |
+| `<leader>la` | Code Action | Code suggestions (Quick fix) |
+| `<leader>lf` | Format | Beautify code (Manual) |
+| `<leader>lj` | Next Diagnostic | Jump to next error |
+| `<leader>lk` | Prev Diagnostic | Jump to previous error |
 
 ### 🔍 Searching & Navigation
-| Tombol | Plugin | Aksi |
+| Key | Plugin | Action |
 | :--- | :--- | :--- |
-| `<leader>ff` | **Telescope** | Cari File berdasarkan nama |
-| `<leader>fg` | **Telescope** | Cari Teks dalam seluruh proyek |
-| `<leader>fb` | **Telescope** | Cari Buffer yang sedang terbuka |
-| `-` | **Oil.nvim** | Buka editor file system (Edit folder) |
+| `<leader>ff` | **Telescope** | Find File by name |
+| `<leader>fg` | **Telescope** | Search Text in entire project |
+| `<leader>fb` | **Telescope** | Search Open Buffers |
+| `-` | **Oil.nvim** | Open file system editor (Edit folder) |
 | `\` | **Neo-tree** | Toggle sidebar file explorer |
-| `s` | **Flash.nvim** | Lompat cepat ke teks manapun |
-| `<leader>xx` | **Trouble** | Buka daftar error/diagnostik |
-| `<leader>cs` | **Trouble** | Buka struktur symbols (outline) |
+| `s` | **Flash.nvim** | Fast jump to any text |
+| `<leader>xx` | **Trouble** | Open error/diagnostic list |
+| `<leader>cs` | **Trouble** | Open symbols structure (outline) |
 
 ### 🧪 Testing (Neotest)
-| Tombol | Aksi | Deskripsi |
+| Key | Action | Description |
 | :--- | :--- | :--- |
-| `<leader>tn` | Test Nearest | Jalankan tes terdekat |
-| `<leader>tf` | Test File | Jalankan semua tes di file ini |
-| `<leader>ts` | Test Suite | Jalankan seluruh suite tes |
-| `<leader>to` | Toggle Summary | Buka panel ringkasan tes |
+| `<leader>tn` | Test Nearest | Run nearest test |
+| `<leader>tf` | Test File | Run all tests in this file |
+| `<leader>ts` | Test Suite | Run entire test suite |
+| `<leader>to` | Toggle Summary | Open test summary panel |
 
 ### 🖥️ Tabs & Terminal
-| Tombol | Aksi | Deskripsi |
+| Key | Action | Description |
 | :--- | :--- | :--- |
-| `<leader>;` | New Terminal | Buka Terminal di Tab baru |
-| `<leader>an` | New Tab | Buat Tab kosong baru |
-| `<leader>ao` | Only Tab | Tutup semua tab kecuali ini |
+| `<leader>;` | New Terminal | Open Terminal in a new Tab |
+| `<leader>an` | New Tab | Create a new empty Tab |
+| `<leader>ao` | Only Tab | Close all tabs except this one |
 
 ---
 
 ## PHP (Intelephense)
-Install menggunakan `:Mason`, pilih `intelephense`. Konfigurasi sudah dioptimalkan untuk pengembangan PHP modern.
+Install using `:Mason`, select `intelephense`. The configuration is already optimized for modern PHP development.
 
 ## 📄 License
 MIT License - [LICENSE](LICENSE)
