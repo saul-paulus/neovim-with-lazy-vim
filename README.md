@@ -7,111 +7,103 @@ This configuration turns Neovim into a **professional polyglot editor** for soft
 ### Key features
 
 - **Modern plugin management**: `lazy.nvim` as the plugin manager.
-- **Languages & LSPs**:
-  - JavaScript/TypeScript (frontend & backend)
-  - PHP (`intelephense`)
-  - Python, Go, Rust, Lua, HTML/CSS, JSON/YAML, Markdown, and more
-- **Auto-completion & snippets**:
-  - `nvim-cmp` + `LuaSnip` + `friendly-snippets`
-- **Automatic formatting**:
-  - `conform.nvim` (prettier/prettierd, black, isort, stylua, rustfmt, shfmt, pint, php-cs-fixer, etc.)
-  - Format on save with LSP as a fallback when needed
-- **Code navigation & structure**:
-  - `nvim-treesitter` + textobjects
-  - `telescope.nvim` for fuzzy finding
-  - `neo-tree` as file explorer, git status, and diagnostics view
-- **Integrated testing**:
-  - `neotest` + adapters (Jest, Python, Go, Rust)
-  - Standard keymaps to run tests directly from Neovim
-- **UX enhancements**:
-  - `lualine`, `which-key`, `bufferline`, and more
+- **Languages & LSPs**: TypeScript, PHP, Python, Go, Rust, Lua, TailwindCSS, etc.
+- **Auto-completion**: `nvim-cmp` with AI-friendly support (Copilot/Tabnine ready).
+- **Automatic formatting**: `conform.nvim` for consistent style.
+- **Fast Navigation**: `flash.nvim` for jumping and `oil.nvim` for file editing.
+- **Integrated testing**: `neotest` for running tests directly.
 
 ---
 
 ## Installation
 
 ### 1. Clone the configuration
-
-On Linux/macOS (default Neovim config directory `~/.config/nvim`):
-
 ```bash
 git clone https://github.com/saul-paulus/neovim-with-lazy-vim.git ~/.config/nvim
 ```
 
-> If you clone into a different directory, make sure the final folder name is `nvim`.
-
-### 2. Start Neovim and install plugins
-
-1. Open Neovim:
-
-   ```bash
-   nvim
-   ```
-
-2. Lazy will automatically install all plugins on the first start.  
-   You can open the Lazy dashboard manually with:
-
-   ```vim
-   :Lazy
-   ```
-
-Wait until all plugins are installed, then restart Neovim.
+### 2. Start Neovim
+Open Neovim and wait for `lazy.nvim` to install all plugins. Restart after completion.
 
 ---
 
-## Daily workflow (overview)
+## ⌨️ Keymaps Documentation
 
-### LSP & code navigation
+Berikut adalah rangkuman perintah keyboard untuk workflow harian Anda.
 
-- **Go to definition**: `gd`
-- **Go to declaration**: `gD`
-- **Go to implementation**: `gI`
-- **Find references**: `gr`
-- **Hover documentation**: `K`
-- **Rename symbol**: `<leader>lr`
-- **Code action**: `<leader>la`
-- **Diagnostics**:
-  - Open diagnostic float at cursor: `gl`
-  - Next/previous diagnostic in buffer: `<leader>lj` / `<leader>lk`
+### 🛠️ General & Editor
+| Tombol | Perintah Vim | Deskripsi |
+| :--- | :--- | :--- |
+| **`<leader>`** | `<Space>` | **Leader Key Utaman** |
+| `Ctrl + s` | `:w` | Simpan file |
+| `Ctrl + z` | `u` | Undo (Batal) |
+| `Ctrl + y` | `Ctrl + r` | Redo (Kembali) |
+| `Ctrl + a` | `ggVG` | Pilih Semua Teks |
+| `Ctrl + f` | `/` | Cari Teks (Search) |
+| `Ctrl + /` | `gcc` | Toggle Komentar (Line) |
+| `Alt + j` | - | Geser baris ke Bawah |
+| `Alt + k` | - | Geser baris ke Atas |
+| `<leader>h` | `:nohlsearch` | Hilangkan highlight pencarian |
+| `<leader>q` | `:confirm q` | Keluar dari Neovim |
 
-### Formatting
+### 🪟 Windows & Buffers
+| Tombol | Perintah | Deskripsi |
+| :--- | :--- | :--- |
+| `<leader>v` | `:vsplit` | Split jendela secara Vertikal |
+| `Ctrl + h` | - | Pindah ke jendela Kiri |
+| `Ctrl + j` | - | Pindah ke jendela Bawah |
+| `Ctrl + k` | - | Pindah ke jendela Atas |
+| `Ctrl + l` | - | Pindah ke jendela Kanan |
+| `<Tab>` | `:bnext` | Pindah ke Buffer Berikutnya |
+| `Shift + <Tab>` | `:bprevious` | Pindah ke Buffer Sebelumnya |
+| `<leader>c` | `:bd` | Menutup Buffer/Tab saat ini |
 
-- **Format on save**: enabled by default for many filetypes.
-- **Manual format**:
+### 🧠 LSP & Code Intelligence
+| Tombol | Aksi | Deskripsi |
+| :--- | :--- | :--- |
+| `gd` | Definition | Ke definisi fungsi/variabel |
+| `gD` | Declaration | Ke deklarasi fungsi/variabel |
+| `gI` | Implementation | Ke implementasi class/interface |
+| `gr` | References | Cari semua referensi kode |
+| `K` | Hover | Tampilkan dokumentasi fungsi |
+| `gl` | Diagnostic | Lihat error di baris saat ini |
+| `<leader>lr` | Rename | Ubah nama variabel secara global |
+| `<leader>la` | Code Action | Saran perbaikan kode (Quick fix) |
+| `<leader>lf` | Format | Merapikan kode (Manual) |
+| `<leader>lj` | Next Diagnostic | Lompat ke error berikutnya |
+| `<leader>lk` | Prev Diagnostic | Lompat ke error sebelumnya |
 
-  ```vim
-  :Format
-  ```
+### 🔍 Searching & Navigation
+| Tombol | Plugin | Aksi |
+| :--- | :--- | :--- |
+| `<leader>ff` | **Telescope** | Cari File berdasarkan nama |
+| `<leader>fg` | **Telescope** | Cari Teks dalam seluruh proyek |
+| `<leader>fb` | **Telescope** | Cari Buffer yang sedang terbuka |
+| `-` | **Oil.nvim** | Buka editor file system (Edit folder) |
+| `\` | **Neo-tree** | Toggle sidebar file explorer |
+| `s` | **Flash.nvim** | Lompat cepat ke teks manapun |
+| `<leader>xx` | **Trouble** | Buka daftar error/diagnostik |
+| `<leader>cs` | **Trouble** | Buka struktur symbols (outline) |
 
-### Testing (neotest)
+### 🧪 Testing (Neotest)
+| Tombol | Aksi | Deskripsi |
+| :--- | :--- | :--- |
+| `<leader>tn` | Test Nearest | Jalankan tes terdekat |
+| `<leader>tf` | Test File | Jalankan semua tes di file ini |
+| `<leader>ts` | Test Suite | Jalankan seluruh suite tes |
+| `<leader>to` | Toggle Summary | Buka panel ringkasan tes |
 
-Normal mode:
-
-- Run nearest test: **`<leader>tn`**
-- Run all tests in current file: **`<leader>tf`**
-- Run the whole test suite/project: **`<leader>ts`**
-- Re-run last test: **`<leader>tl`**
-- Toggle test summary panel: **`<leader>to`**
+### 🖥️ Tabs & Terminal
+| Tombol | Aksi | Deskripsi |
+| :--- | :--- | :--- |
+| `<leader>;` | New Terminal | Buka Terminal di Tab baru |
+| `<leader>an` | New Tab | Buat Tab kosong baru |
+| `<leader>ao` | Only Tab | Tutup semua tab kecuali ini |
 
 ---
 
-## PHP (Intelephense) notes
-
-The configuration is prepared to use the `intelephense` LSP via `mason-lspconfig`.  
-To enable it:
-
-1. Open Neovim and run:
-
-   ```vim
-   :Mason
-   ```
-
-2. Install the **`intelephense`** package from the Mason UI.
-3. Restart Neovim and open a `.php` file.
-
----
+## PHP (Intelephense)
+Install menggunakan `:Mason`, pilih `intelephense`. Konfigurasi sudah dioptimalkan untuk pengembangan PHP modern.
 
 ## 📄 License
-
-This project is open-source software licensed under the MIT License.
-See the see [LICENSE](LICENSE)
+MIT License - [LICENSE](LICENSE)

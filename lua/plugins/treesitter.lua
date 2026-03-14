@@ -9,7 +9,7 @@ return {
     require('nvim-treesitter.configs').setup({
       ensure_installed = {
         'lua', 'javascript', 'typescript', 'tsx', 'html', 'css', 'json', 'yaml', 'bash', 'python',
-        'markdown', 'markdown_inline', 'vue', 'php', 'http', 'json5'
+        'markdown', 'markdown_inline', 'vue', 'php', 'http', 'json5', 'prisma'
       },
       ignore_install = { 'phpdoc' }, 
       highlight = {

@@ -12,7 +12,8 @@ local servers = {
   'marksman',
   'eslint',
   'volar',
-  'tailwindcss'
+  'tailwindcss',
+  'prismals'
 }
 
 local settings = {
