@@ -7,9 +7,10 @@ vim.g.maplocalleader = "\\\\"
 
 -- Window Navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
-keymap("n", "<C-j>", "<C-w>j", opts)
+-- keymap("n", "<C-j>", "<C-w>j", opts) -- Conflict with ToggleTerm
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
+keymap("n", "<C-Down>", "<C-w>j", opts) -- Alternative for navigation
 
 -- Buffer Navigation (Tab)
 keymap("n", "<tab>", ":bnext<cr>", opts)
@@ -60,8 +61,23 @@ keymap("n", "<C-f>", "/", opts)
 -- COMMENT (Ctrl + /) - Usually mapped to Ctrl + _ in some terminals
 keymap("n", "<C-_>", "gcc", { noremap = false, silent = true })
 keymap("v", "<C-_>", "gc", { noremap = false, silent = true })
+keymap("x", "<C-_>", "gc", { noremap = false, silent = true })
 keymap("i", "<C-_>", "<Esc>gcca", { noremap = false, silent = true })
 
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
+
+-- Terminal Navigation
+function _G.set_terminal_keymaps()
+  local terminal_opts = {buffer = 0}
+  vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], terminal_opts)
+  vim.keymap.set('t', 'jk', [[<C-\><C-n>]], terminal_opts)
+  vim.keymap.set('t', '<C-h>', [[<C-\><C-n><C-w>h]], terminal_opts)
+  vim.keymap.set('t', '<C-j>', [[<C-\><C-n><C-w>j]], terminal_opts)
+  vim.keymap.set('t', '<C-k>', [[<C-\><C-n><C-w>k]], terminal_opts)
+  vim.keymap.set('t', '<C-l>', [[<C-\><C-n><C-w>l]], terminal_opts)
+end
+
+-- if you only want these mappings for toggle term use termopen
+vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')

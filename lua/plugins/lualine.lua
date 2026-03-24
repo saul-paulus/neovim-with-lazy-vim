@@ -44,14 +44,6 @@ function M.config()
       lualine_c = { 
         'filename', 
         diagnostics,
-        {
-          function()
-            return navic.get_location()
-          end,
-          cond = function()
-            return navic.is_available()
-          end,
-        },
       },
       lualine_x = { diff, 'encoding', filetype },
       lualine_y = { 'progress' },

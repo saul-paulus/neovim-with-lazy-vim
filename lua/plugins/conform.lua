@@ -21,8 +21,10 @@ return {
         json = { "prettierd", "prettier", stop_after_first = true },
         yaml = { "prettierd", "prettier", stop_after_first = true },
         markdown = { "prettierd", "prettier", stop_after_first = true },
+        prisma = { "prettierd", "prettier", stop_after_first = true },
         sh = { "shfmt" },
         php = { "pint", "php-cs-fixer", stop_after_first = true },
+        blade = { "blade-formatter" },
       },
       -- Set configuration for format_on_save
       format_on_save = {

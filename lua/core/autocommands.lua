@@ -107,3 +107,11 @@ vim.api.nvim_create_autocmd({ "CursorHold" }, {
     end
   end,
 })
+
+-- Blade filetype detection
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = { "*.blade.php", "*.blade.php.inc" },
+  callback = function()
+    vim.bo.filetype = "blade"
+  end,
+})
