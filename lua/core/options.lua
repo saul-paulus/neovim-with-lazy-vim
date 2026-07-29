@@ -1,5 +1,9 @@
 -- Options initial
 
+if vim.hl then
+  rawset(vim, "highlight", vim.hl)
+end
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
  -- Enable for auto format

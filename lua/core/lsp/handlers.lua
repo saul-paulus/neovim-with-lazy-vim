@@ -87,6 +87,16 @@ local function lsp_keymaps(bufnr)
 end
 
 M.on_attach = function(client, bufnr)
+  if client and client.supports_method then
+    local orig_supports_method = client.supports_method
+    client.supports_method = function(self_or_method, ...)
+      if type(self_or_method) == "string" then
+        return orig_supports_method(client, self_or_method, ...)
+      end
+      return orig_supports_method(self_or_method, ...)
+    end
+  end
+
   attach_navic(client, bufnr)
 
   -- Disable LSP formatting for servers handled by external formatters (e.g. conform.nvim)

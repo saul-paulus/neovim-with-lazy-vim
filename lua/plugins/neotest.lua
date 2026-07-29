@@ -5,7 +5,6 @@ return {
     "nvim-treesitter/nvim-treesitter",
     "antoinemadec/FixCursorHold.nvim",
     -- Adapters
-    "Vimajas/neotest-pest",
     "nvim-neotest/neotest-jest",
     "nvim-neotest/neotest-python",
     "nvim-neotest/neotest-go",

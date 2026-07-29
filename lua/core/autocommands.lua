@@ -77,7 +77,7 @@ autocmd({ "BufWinEnter" }, {
 autocmd({ "TextYankPost" }, {
   group = general_group,
   callback = function()
-    vim.highlight.on_yank { higroup = "Visual", timeout = 40 }
+    (vim.hl or vim.highlight).on_yank { higroup = "Visual", timeout = 40 }
   end,
 })
 
