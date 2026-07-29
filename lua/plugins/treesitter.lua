@@ -9,7 +9,11 @@ return {
   },
   config = function()
     vim.g.skip_ts_context_commentstring_module = true
-    require('nvim-treesitter.configs').setup({
+    local status_ok, configs = pcall(require, 'nvim-treesitter.configs')
+    if not status_ok then
+      return
+    end
+    configs.setup({
       ensure_installed = {
         'lua', 'javascript', 'typescript', 'tsx', 'html', 'css', 'json', 'yaml', 'bash', 'python',
         'markdown', 'markdown_inline', 'vue', 'php', 'http', 'json5', 'prisma', 'blade'
