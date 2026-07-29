@@ -1,6 +1,2 @@
-return {
-  {
-    'famiu/bufdelete.nvim',
-    event = 'VeryLazy',
-  },
-}
+-- Consolidated into individual plugin spec files
+return {}

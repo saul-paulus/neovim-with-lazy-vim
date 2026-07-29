@@ -15,9 +15,9 @@ local diff = {
 }
 
 local filetype = {
-    'filetype',
-    icons_enabled = true,
-    icon_only = false,
+  'filetype',
+  icons_enabled = true,
+  icon_only = false,
 }
 
 local M = {
@@ -41,8 +41,8 @@ function M.config()
     sections = {
       lualine_a = { 'mode' },
       lualine_b = { 'branch' },
-      lualine_c = { 
-        'filename', 
+      lualine_c = {
+        'filename',
         diagnostics,
       },
       lualine_x = { diff, 'encoding', filetype },
@@ -53,3 +53,4 @@ function M.config()
 end
 
 return M
+

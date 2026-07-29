@@ -1,3 +1,5 @@
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
 
 -- Auto change directory to project root
 local root_names = { ".git", "Makefile", "package.json", "package-lock.json", "composer.json" }
@@ -13,23 +15,28 @@ local function get_root()
   return nil
 end
 
-vim.api.nvim_create_autocmd("BufEnter", {
-  callback = function()
+local general_group = augroup("GeneralSettings", { clear = true })
+
+autocmd("BufEnter", {
+  group = general_group,
+  callback = function(ctx)
+    if vim.bo[ctx.buf].buftype ~= "" then return end
     local root = get_root()
-    if root then
-      vim.api.nvim_set_current_dir(root)
+    if root and root ~= vim.fn.getcwd() then
+      pcall(vim.api.nvim_set_current_dir, root)
     end
-  end
+  end,
 })
 
-
-vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+autocmd({ "BufWinEnter" }, {
+  group = general_group,
   callback = function()
     vim.cmd "set formatoptions-=cro"
   end,
 })
 
-vim.api.nvim_create_autocmd({ "FileType" }, {
+autocmd({ "FileType" }, {
+  group = general_group,
   pattern = {
     "netrw",
     "Jaq",
@@ -43,7 +50,6 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     "lir",
     "DressingSelect",
     "tsplayground",
-    "",
   },
   callback = function()
     vim.cmd [[
@@ -53,32 +59,30 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   end,
 })
 
-vim.api.nvim_create_autocmd({ "CmdWinEnter" }, {
-  callback = function()
-    vim.cmd "quit"
-  end,
-})
-
-vim.api.nvim_create_autocmd({ "VimResized" }, {
+autocmd({ "VimResized" }, {
+  group = general_group,
   callback = function()
     vim.cmd "tabdo wincmd ="
   end,
 })
 
-vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+autocmd({ "BufWinEnter" }, {
+  group = general_group,
   pattern = { "*" },
   callback = function()
     vim.cmd "checktime"
   end,
 })
 
-vim.api.nvim_create_autocmd({ "TextYankPost" }, {
+autocmd({ "TextYankPost" }, {
+  group = general_group,
   callback = function()
     vim.highlight.on_yank { higroup = "Visual", timeout = 40 }
   end,
 })
 
-vim.api.nvim_create_autocmd({ "FileType" }, {
+autocmd({ "FileType" }, {
+  group = general_group,
   pattern = { "gitcommit", "markdown", "NeogitCommitMessage" },
   callback = function()
     vim.opt_local.wrap = true
@@ -86,8 +90,9 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   end,
 })
 
-vim.api.nvim_create_autocmd("TermClose", {
-  pattern = "*lazygit",
+autocmd("TermClose", {
+  group = general_group,
+  pattern = "*lazygit*",
   callback = function()
     if package.loaded["neo-tree.sources.git_status"] then
       require("neo-tree.sources.git_status").refresh()
@@ -95,23 +100,10 @@ vim.api.nvim_create_autocmd("TermClose", {
   end,
 })
 
-
-vim.api.nvim_create_autocmd({ "CursorHold" }, {
-  callback = function()
-    local status_ok, luasnip = pcall(require, "luasnip")
-    if not status_ok then
-      return
-    end
-    if luasnip.expand_or_jumpable() then
-      vim.cmd [[silent! lua require("luasnip").unlink_current()]]
-    end
-  end,
-})
-
 -- Blade filetype detection
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = { "*.blade.php", "*.blade.php.inc" },
-  callback = function()
-    vim.bo.filetype = "blade"
-  end,
+vim.filetype.add({
+  pattern = {
+    [".*%.blade%.php"] = "blade",
+    [".*%.blade%.php%.inc"] = "blade",
+  },
 })

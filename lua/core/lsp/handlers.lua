@@ -1,24 +1,24 @@
 local M = {}
 
-local status_cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if not status_cmp_ok then
-  return
-end
-
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true
-M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
+
+local status_cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+if status_cmp_ok then
+  M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
+end
 
 M.setup = function()
-  local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-  for type, icon in pairs(signs) do
-    local hl = "DiagnosticSign" .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-  end
-
   local config = {
     virtual_text = false,
-    signs = true,
+    signs = {
+      text = {
+        [vim.diagnostic.severity.ERROR] = " ",
+        [vim.diagnostic.severity.WARN] = " ",
+        [vim.diagnostic.severity.HINT] = " ",
+        [vim.diagnostic.severity.INFO] = " ",
+      },
+    },
     update_in_insert = true,
     underline = true,
     severity_sort = true,
@@ -34,8 +34,15 @@ M.setup = function()
 
   vim.diagnostic.config(config)
 
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+  vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
+    config = vim.tbl_deep_extend("force", { border = "rounded" }, config or {})
+    return vim.lsp.handlers.hover(err, result, ctx, config)
+  end
+
+  vim.lsp.handlers["textDocument/signatureHelp"] = function(err, result, ctx, config)
+    config = vim.tbl_deep_extend("force", { border = "rounded" }, config or {})
+    return vim.lsp.handlers.signature_help(err, result, ctx, config)
+  end
 end
 
 local function attach_navic(client, bufnr)
@@ -46,33 +53,48 @@ local function attach_navic(client, bufnr)
 end
 
 local function lsp_keymaps(bufnr)
-  local opts = { noremap = true, silent = true }
-  local keymap = vim.api.nvim_buf_set_keymap
-  keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-  keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  keymap(bufnr, "n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-  keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  keymap(bufnr, "n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-  keymap(bufnr, "n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", opts)
-  keymap(bufnr, "n", "<leader>li", "<cmd>LspInfo<cr>", opts)
-  keymap(bufnr, "n", "<leader>lI", "<cmd>Mason<cr>", opts)
-  keymap(bufnr, "n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
-  keymap(bufnr, "n", "<leader>lj", "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>", opts)
-  keymap(bufnr, "n", "<leader>lk", "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>", opts)
-  keymap(bufnr, "n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
-  keymap(bufnr, "n", "<leader>ls", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-  keymap(bufnr, "n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
+  local map = function(mode, lhs, rhs, desc)
+    vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, silent = true, desc = desc })
+  end
+
+  map("n", "gD", vim.lsp.buf.declaration, "Go to Declaration")
+  map("n", "gd", vim.lsp.buf.definition, "Go to Definition")
+  map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
+  map("n", "gI", vim.lsp.buf.implementation, "Go to Implementation")
+  map("n", "gr", vim.lsp.buf.references, "Go to References")
+  map("n", "gl", vim.diagnostic.open_float, "Open Diagnostic Float")
+  map("n", "<leader>lf", function() vim.lsp.buf.format({ async = true }) end, "Format Document")
+  map("n", "<leader>li", "<cmd>LspInfo<cr>", "LSP Info")
+  map("n", "<leader>lI", "<cmd>Mason<cr>", "Mason Info")
+  map("n", "<leader>la", vim.lsp.buf.code_action, "Code Action")
+  map("n", "<leader>lj", function()
+    if vim.diagnostic.jump then
+      vim.diagnostic.jump({ count = 1 })
+    else
+      vim.diagnostic.goto_next({ buffer = 0 })
+    end
+  end, "Next Diagnostic")
+  map("n", "<leader>lk", function()
+    if vim.diagnostic.jump then
+      vim.diagnostic.jump({ count = -1 })
+    else
+      vim.diagnostic.goto_prev({ buffer = 0 })
+    end
+  end, "Previous Diagnostic")
+  map("n", "<leader>lr", vim.lsp.buf.rename, "Rename Symbol")
+  map("n", "<leader>ls", vim.lsp.buf.signature_help, "Signature Help")
+  map("n", "<leader>lq", vim.diagnostic.setloclist, "Set Location List")
 end
 
 M.on_attach = function(client, bufnr)
   attach_navic(client, bufnr)
 
   -- Disable LSP formatting for servers handled by external formatters (e.g. conform.nvim)
-  local disable_formatting = { "ts_ls", "volar", "intelephense", "phpactor", "tailwindcss" }
+  local disable_formatting = { "ts_ls", "tsserver", "volar", "intelephense", "phpactor", "tailwindcss" }
   for _, name in pairs(disable_formatting) do
     if client.name == name then
       client.server_capabilities.documentFormattingProvider = false
+      client.server_capabilities.documentRangeFormattingProvider = false
     end
   end
 

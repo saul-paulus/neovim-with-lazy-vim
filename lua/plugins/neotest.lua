@@ -5,36 +5,48 @@ return {
     "nvim-treesitter/nvim-treesitter",
     "antoinemadec/FixCursorHold.nvim",
     -- Adapters
+    "Vimajas/neotest-pest",
     "nvim-neotest/neotest-jest",
     "nvim-neotest/neotest-python",
     "nvim-neotest/neotest-go",
     "rouge8/neotest-rust",
   },
   keys = {
-    { "<leader>tn", desc = "Test nearest" },
-    { "<leader>tf", desc = "Test current file" },
-    { "<leader>ts", desc = "Test whole suite" },
-    { "<leader>tl", desc = "Test last" },
-    { "<leader>to", desc = "Toggle test summary" },
+    { "<leader>tn", function() require("neotest").run.run() end, desc = "Test nearest" },
+    { "<leader>tf", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "Test current file" },
+    { "<leader>ts", function() require("neotest").run.run(vim.fn.getcwd()) end, desc = "Test whole suite" },
+    { "<leader>tl", function() require("neotest").run.run_last() end, desc = "Test last" },
+    { "<leader>to", function() require("neotest").summary.toggle() end, desc = "Toggle test summary" },
   },
   config = function()
     local neotest = require("neotest")
 
+    local adapters = {}
+    local status_pest, pest_adapter = pcall(require, "neotest-pest")
+    if status_pest then table.insert(adapters, pest_adapter) end
+
+    local status_jest, jest_adapter = pcall(require, "neotest-jest")
+    if status_jest then
+      table.insert(adapters, jest_adapter({
+        jestCommand = "npm test --",
+        env = { CI = true },
+        cwd = function() return vim.fn.getcwd() end,
+      }))
+    end
+
+    local status_py, py_adapter = pcall(require, "neotest-python")
+    if status_py then
+      table.insert(adapters, py_adapter({ dap = { justMyCode = false } }))
+    end
+
+    local status_go, go_adapter = pcall(require, "neotest-go")
+    if status_go then table.insert(adapters, go_adapter()) end
+
+    local status_rust, rust_adapter = pcall(require, "neotest-rust")
+    if status_rust then table.insert(adapters, rust_adapter()) end
+
     neotest.setup({
-      adapters = {
-        require("neotest-jest")({
-          jestCommand = "npm test --",
-          env = { CI = true },
-          cwd = function()
-            return vim.fn.getcwd()
-          end,
-        }),
-        require("neotest-python")({
-          dap = { justMyCode = false },
-        }),
-        require("neotest-go")(),
-        require("neotest-rust")(),
-      },
+      adapters = adapters,
       summary = {
         enabled = true,
         follow = true,
@@ -47,29 +59,5 @@ return {
         enabled = false,
       },
     })
-
-    local map = vim.keymap.set
-    local opts = { noremap = true, silent = true }
-
-    map("n", "<leader>tn", function()
-      neotest.run.run()
-    end, opts)
-
-    map("n", "<leader>tf", function()
-      neotest.run.run(vim.fn.expand("%"))
-    end, opts)
-
-    map("n", "<leader>ts", function()
-      neotest.run.run(vim.fn.getcwd())
-    end, opts)
-
-    map("n", "<leader>tl", function()
-      neotest.run.run_last()
-    end, opts)
-
-    map("n", "<leader>to", function()
-      neotest.summary.toggle()
-    end, opts)
   end,
 }
-

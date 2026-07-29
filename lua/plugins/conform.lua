@@ -16,6 +16,7 @@ return {
         typescript = { "prettierd", "prettier", stop_after_first = true },
         javascriptreact = { "prettierd", "prettier", stop_after_first = true },
         typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+        vue = { "prettierd", "prettier", stop_after_first = true },
         css = { "prettierd", "prettier", stop_after_first = true },
         html = { "prettierd", "prettier", stop_after_first = true },
         json = { "prettierd", "prettier", stop_after_first = true },
@@ -29,7 +30,7 @@ return {
       -- Set configuration for format_on_save
       format_on_save = {
         -- These options will be passed to conform.format()
-        timeout_ms = 1000,
+        timeout_ms = 3000,
         lsp_format = "fallback",
       },
     })

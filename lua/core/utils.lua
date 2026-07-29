@@ -11,7 +11,7 @@ M.get_tab = function()
   local extension = vim.fn.fnamemodify(file_path, ":e")
   local icon, _ = require("nvim-web-devicons").get_icon(filename, extension, { default = true })
 
-  local modified = vim.api.nvim_buf_get_option(bufnr, "modified") and " ● " or ""
+  local modified = vim.bo[bufnr].modified and " ● " or ""
   
   -- Component for the tab-like filename
   local close_icon = " "

@@ -3,7 +3,7 @@ return {
   version = "*",
   opts = {
     size = 15,
-    open_mapping = [[<c-j>]], -- Using Ctrl+j for VS Code style
+    open_mapping = [[<c-\>]],
     hide_numbers = true,
     shade_filetypes = {},
     shade_terminals = true,

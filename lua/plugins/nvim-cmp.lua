@@ -247,14 +247,6 @@ function M.config()
             return false
           end
 
-          if ctx.prev_context.filetype == "markdown" then
-            return true
-          end
-
-          if kind == "Text" then
-            return false
-          end
-
           return true
         end,
       },
@@ -265,9 +257,6 @@ function M.config()
       { name = "calc" },
       { name = "emoji" },
       { name = "treesitter" },
-      -- { name = "copilot" },
-      -- { name = "cmp_tabnine" },
-      -- { name = "crates" },
     },
     confirm_opts = {
       behavior = cmp.ConfirmBehavior.Replace,
@@ -279,7 +268,7 @@ function M.config()
         selection_order = "top_down",
       },
       docs = {
-        auto_open = false,
+        auto_open = true,
       },
     },
     window = {

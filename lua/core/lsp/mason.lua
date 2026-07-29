@@ -7,12 +7,11 @@ local servers = {
   'yamlls',
   'emmet_ls',
   'intelephense',
-  'phpactor',
   'marksman',
   'eslint',
   'volar',
   'tailwindcss',
-  'prismals'
+  'prismals',
 }
 
 local settings = {
@@ -34,11 +33,6 @@ require('mason-lspconfig').setup({
   automatic_installation = true,
 })
 
-local lspconfig_status_ok, lspconfig = pcall(require, 'lspconfig')
-if not lspconfig_status_ok then
-  return
-end
-
 local handlers = require('core.lsp.handlers')
 
 for _, server in pairs(servers) do
@@ -49,14 +43,16 @@ for _, server in pairs(servers) do
 
   local require_ok, conf_opts = pcall(require, 'core.lsp.settings.' .. server)
   if require_ok then
-    opts = vim.tbl_deep_extend('force', conf_opts, opts)
+    opts = vim.tbl_deep_extend('force', opts, conf_opts)
   end
 
-  -- Suppress the deprecation warning from nvim-lspconfig in Neovim 0.11
-  local original_deprecate = vim.deprecate
-  vim.deprecate = function() end
-  
-  lspconfig[server].setup(opts)
-  
-  vim.deprecate = original_deprecate
+  if vim.lsp.config then
+    vim.lsp.config(server, opts)
+    vim.lsp.enable(server)
+  else
+    local lspconfig_status_ok, lspconfig = pcall(require, 'lspconfig')
+    if lspconfig_status_ok then
+      lspconfig[server].setup(opts)
+    end
+  end
 end
