@@ -2,118 +2,144 @@
 
 # Neovim Professional Setup
 
-This configuration turns Neovim into a **professional polyglot editor** for software engineers: full LSP support, automatic formatting, integrated testing, and a consistent daily workflow.
-
-### Key features
-
-- **Modern plugin management**: `lazy.nvim` as the plugin manager.
-- **Languages & LSPs**: TypeScript, PHP, Python, Go, Rust, Lua, TailwindCSS, etc.
-- **Auto-completion**: `nvim-cmp` with AI-friendly support (Copilot/Tabnine ready).
-- **Automatic formatting**: `conform.nvim` for consistent style.
-- **Fast Navigation**: `flash.nvim` for jumping and `oil.nvim` for file editing.
-- **Integrated testing**: `neotest` for running tests directly.
+An elegant, high-performance, and **polyglot Neovim configuration** tailored for software engineers. Optimized for **Neovim 0.11+** with native LSP APIs, full Treesitter integration, automatic formatting, and integrated testing.
 
 ---
 
-## Installation
+## ✨ Key Features
 
-### 1. Clone the configuration
+- ⚡ **Neovim 0.11+ Ready**: Native `vim.lsp.config` & `vim.lsp.enable` integration, zero deprecation warnings.
+- 📦 **Plugin Management**: Powered by [`lazy.nvim`](https://github.com/folke/lazy.nvim).
+- 🧠 **LSP & Intelligence**: TypeScript/JS, PHP (Intelephense), Python, Go, Rust, Lua, Vue, Prisma, TailwindCSS, HTML/CSS, JSON/YAML.
+- 🌳 **Treesitter Syntax & Highlighting**: Pinned `master` branch with custom query overrides.
+- 💅 **Code Formatting**: Fast, non-blocking auto-formatting via [`conform.nvim`](https://github.com/stevearc/conform.nvim).
+- 🚀 **Navigation & Search**: Fast jump via [`flash.nvim`](https://github.com/folke/flash.nvim), floating filesystem editor with [`oil.nvim`](https://github.com/stevearc/oil.nvim), and sidebar explorer with [`neo-tree.nvim`](https://github.com/nvim-neo-tree/neo-tree.nvim).
+- 🔭 **Fuzzy Finder**: Rich search across files, text, buffers, and git via [`telescope.nvim`](https://github.com/nvim-telescope/telescope.nvim).
+- 🧪 **Testing Framework**: Integrated test runner with [`neotest`](https://github.com/nvim-neotest/neotest) (Jest, Python, Go, Rust).
+- 📊 **UI & Statusline**: Glassmorphism dashboard, [`lualine.nvim`](https://github.com/nvim-lualine/lualine.nvim), floating diagnostics with [`noice.nvim`](https://github.com/folke/noice.nvim), and breadcrumbs with [`barbecue`](https://github.com/utilyre/barbecue.nvim).
+
+---
+
+## 📋 Requirements
+
+- **Neovim** `v0.11.0` or later
+- **Git** `2.19+`
+- **rg** ([ripgrep](https://github.com/BurntSushi/ripgrep))
+- **fd** ([fd-find](https://github.com/sharkdp/fd))
+- **Node.js** & **npm** (for LSPs like Pyright, TypeScript, Volar, etc.)
+- A **Nerd Font** (e.g. `SauceCodePro Nerd Font` or `FiraCode Nerd Font`)
+
+---
+
+## 📦 Installation & Setup
+
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/saul-paulus/neovim-with-lazy-vim.git ~/.config/nvim
 ```
 
-### 2. Start Neovim
+### 2. Launch Neovim
 
-Open Neovim and wait for `lazy.nvim` to install all plugins. Restart after completion.
+```bash
+nvim
+```
+
+`lazy.nvim` will automatically download, compile, and configure all plugins.
+
+### 3. Sync & Update Parsers
+
+Inside Neovim, run:
+```vim
+:Lazy sync
+:TSUpdate
+```
 
 ---
 
-## ⌨️ Keymaps Documentation
-
-Here is a summary of the keyboard commands for your daily workflow.
+## ⌨️ Keymaps Reference
 
 ### 🛠️ General & Editor
 
-| Key            | Vim Command   | Description             |
-| :------------- | :------------ | :---------------------- |
-| **`<leader>`** | `<Space>`     | **Main Leader Key**     |
-| `Ctrl + s`     | `:w`          | Save file               |
-| `Ctrl + z`     | `u`           | Undo                    |
-| `Ctrl + y`     | `Ctrl + r`    | Redo                    |
-| `Ctrl + a`     | `ggVG`        | Select All Text         |
-| `Ctrl + f`     | `/`           | Search Text             |
-| `Ctrl + /`     | `gcc`         | Toggle Comment (Line)   |
-| `Alt + j`      | -             | Move line Down          |
-| `Alt + k`      | -             | Move line Up            |
-| `<leader>h`    | `:nohlsearch` | Clear search highlights |
-| `<leader>q`    | `:confirm q`  | Quit Neovim             |
+| Key | Mode | Command / Action | Description |
+| :--- | :--- | :--- | :--- |
+| **`<Space>`** | Normal | - | **Main Leader Key** |
+| `Ctrl + s` | Normal | `:w` | Save active file |
+| `Ctrl + z` | Normal | `u` | Undo |
+| `Ctrl + y` | Normal | `Ctrl + r` | Redo |
+| `Ctrl + a` | Normal | `ggVG` | Select all text in buffer |
+| `Ctrl + f` | Normal | `/` | Search text in buffer |
+| `Ctrl + /` | Normal/Visual | `gcc` / `gc` | Toggle comment |
+| `Alt + j` | Normal | `:m .+1<cr>==gi` | Move current line down |
+| `Alt + k` | Normal | `:m .-2<cr>==gi` | Move current line up |
+| `<leader>h` | Normal | `:nohlsearch` | Clear search highlighting |
+| `<leader>q` | Normal | `:confirm q` | Quit Neovim cleanly |
 
 ### 🪟 Windows & Buffers
 
-| Key             | Command      | Description              |
-| :-------------- | :----------- | :----------------------- |
-| `<leader>v`     | `:vsplit`    | Split window Vertically  |
-| `Ctrl + h`      | -            | Focus Left window        |
-| `Ctrl + j`      | -            | Focus Bottom window      |
-| `Ctrl + k`      | -            | Focus Top window         |
-| `Ctrl + l`      | -            | Focus Right window       |
-| `<Tab>`         | `:bnext`     | Go to Next Buffer        |
-| `Shift + <Tab>` | `:bprevious` | Go to Previous Buffer    |
-| `<leader>c`     | `:bd`        | Close current Buffer/Tab |
+| Key | Mode | Action | Description |
+| :--- | :--- | :--- | :--- |
+| `<leader>v` | Normal | `:vsplit` | Split window vertically |
+| `Ctrl + h` | Normal | `<C-w>h` | Focus left window |
+| `Ctrl + j` | Normal | `<C-w>j` | Focus bottom window |
+| `Ctrl + k` | Normal | `<C-w>k` | Focus top window |
+| `Ctrl + l` | Normal | `<C-w>l` | Focus right window |
+| `<Tab>` | Normal | `:bnext` | Next buffer |
+| `Shift + <Tab>` | Normal | `:bprevious` | Previous buffer |
+| `<leader>c` | Normal | `:bd` | Close current buffer |
 
 ### 🧠 LSP & Code Intelligence
 
-| Key          | Action          | Description                            |
-| :----------- | :-------------- | :------------------------------------- |
-| `gd`         | Definition      | Jump to function/variable definition   |
-| `gD`         | Declaration     | Jump to function/variable declaration  |
-| `gI`         | Implementation  | Jump to class/interface implementation |
-| `gr`         | References      | Search for all code references         |
-| `K`          | Hover           | Show function documentation            |
-| `gl`         | Diagnostic      | View error at current line             |
-| `<leader>lr` | Rename          | Rename variable globally               |
-| `<leader>la` | Code Action     | Code suggestions (Quick fix)           |
-| `<leader>lf` | Format          | Beautify code (Manual)                 |
-| `<leader>lj` | Next Diagnostic | Jump to next error                     |
-| `<leader>lk` | Prev Diagnostic | Jump to previous error                 |
+| Key | Mode | Action | Description |
+| :--- | :--- | :--- | :--- |
+| `gd` | Normal | Definition | Jump to symbol definition |
+| `gD` | Normal | Declaration | Jump to symbol declaration |
+| `gI` | Normal | Implementation | Jump to implementation |
+| `gr` | Normal | References | Find all references |
+| `K` | Normal | Hover | Display documentation popup |
+| `gl` | Normal | Open Float | Show line diagnostics |
+| `<leader>lr` | Normal | Rename | Rename symbol project-wide |
+| `<leader>la` | Normal | Code Action | Quick fixes and refactoring |
+| `<leader>lf` | Normal | Format | Format document manually |
+| `<leader>lj` | Normal | Next Diagnostic | Jump to next error/warning |
+| `<leader>lk` | Normal | Prev Diagnostic | Jump to previous error/warning |
+| `<leader>li` | Normal | `:LspInfo` | View LSP status |
+| `<leader>lI` | Normal | `:Mason` | Open Mason package manager |
 
-### 🔍 Searching & Navigation
+### 🔍 Search & File Navigation
 
-| Key          | Plugin         | Action                                |
-| :----------- | :------------- | :------------------------------------ |
-| `<leader>ff` | **Telescope**  | Find File by name                     |
-| `<leader>fg` | **Telescope**  | Search Text in entire project         |
-| `<leader>fb` | **Telescope**  | Search Open Buffers                   |
-| `-`          | **Oil.nvim**   | Open file system editor (Edit folder) |
-| `\`          | **Neo-tree**   | Toggle sidebar file explorer          |
-| `s`          | **Flash.nvim** | Fast jump to any text                 |
-| `<leader>xx` | **Trouble**    | Open error/diagnostic list            |
-| `<leader>cs` | **Trouble**    | Open symbols structure (outline)      |
+| Key | Plugin | Action | Description |
+| :--- | :--- | :--- | :--- |
+| `<leader>ff` | **Telescope** | Find Files | Search files by name |
+| `<leader>fg` | **Telescope** | Live Grep | Search text across whole project |
+| `<leader>fb` | **Telescope** | Buffers | Search active buffers |
+| `-` | **Oil.nvim** | Open Oil | Open file system buffer |
+| `\` | **Neo-tree** | Toggle Tree | Toggle sidebar file explorer |
+| `s` | **Flash.nvim** | Flash Jump | Fast 2-character jump anywhere |
+| `<leader>xx` | **Trouble** | Diagnostics | Open workspace diagnostics list |
+| `<leader>cs` | **Trouble** | Symbols | View document symbols outline |
 
 ### 🧪 Testing (Neotest)
 
-| Key          | Action         | Description                |
-| :----------- | :------------- | :------------------------- |
-| `<leader>tn` | Test Nearest   | Run nearest test           |
-| `<leader>tf` | Test File      | Run all tests in this file |
-| `<leader>ts` | Test Suite     | Run entire test suite      |
-| `<leader>to` | Toggle Summary | Open test summary panel    |
-
-### 🖥️ Tabs & Terminal
-
-| Key          | Action       | Description                    |
-| :----------- | :----------- | :----------------------------- |
-| `<leader>;`  | New Terminal | Open Terminal in a new Tab     |
-| `<leader>an` | New Tab      | Create a new empty Tab         |
-| `<leader>ao` | Only Tab     | Close all tabs except this one |
+| Key | Command | Description |
+| :--- | :--- | :--- |
+| `<leader>tn` | Test Nearest | Run the test nearest to cursor |
+| `<leader>tf` | Test File | Run all tests in current file |
+| `<leader>ts` | Test Suite | Run entire test suite |
+| `<leader>tl` | Test Last | Re-run last test |
+| `<leader>to` | Toggle Summary | Open/close test summary sidebar |
 
 ---
 
-## PHP (Intelephense)
+## 🛠️ Maintenance Commands
 
-Install using `:Mason`, select `intelephense`. The configuration is already optimized for modern PHP development
+- **`:Lazy`**: Manage, sync, or clean plugins.
+- **`:Mason`**: Install, update, or remove LSPs, formatters, and linters.
+- **`:TSUpdate`**: Update all installed Tree-sitter parsers.
+- **`:checkhealth`**: Verify system health and plugin dependencies.
+
+---
 
 ## 📄 License
 
-This project is open-source software licensed under the [MIT License](LICENSE).
+This configuration is open-source software licensed under the [MIT License](LICENSE).
